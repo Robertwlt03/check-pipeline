@@ -1,0 +1,5 @@
+{"kind": "flow", "items": [
+  {"glyph": "document", "title": "Settings", "text": "check-pipeline.toml names the files, steps and rules."},
+  {"glyph": "search", "title": "Steps", "text": "Each step reads the codebase and returns findings."},
+  {"glyph": "terminal", "title": "Report", "text": "A line per step, the findings by file, a frame at the end."},
+  {"glyph": "globe", "title": "GitHub", "text": "Notes beside the lines and a table on the run's page."}]}

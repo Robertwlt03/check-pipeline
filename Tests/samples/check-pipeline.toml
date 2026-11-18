@@ -1,0 +1,51 @@
+# The samples are a codebase of their own: every check that reads code runs on them and must find
+# exactly the mistakes marked with expect: (see src/check_pipeline/checks/samples.py).
+name = "Samples"
+steps = [
+    "accessibility", "nesting", "duplicates", "architecture", "promises", "disk", "deadcode",
+    "deadscripts", "files", "language", "translations", "guides", "english", "secrets",
+    "security", "scripts", "output", "commits", "fixme",
+]
+
+[files]
+swift_sources = ["Sources/**/*.swift"]
+swift_tests = []
+swift_scripts = ["sample.swift"]
+python_scripts = ["sample.py"]
+makefiles = ["Makefile"]
+guides = ["guides/*.md"]
+workflows = ["workflow.yml", "actions/*/action.yml"]
+exclude = ["custom_rule.py", "check-pipeline.toml", "Package.swift"]
+
+[swift]
+source_root = "Sources/Samples"
+translations = "Resources"
+
+[architecture]
+may_use = { DesignSystem = [], Features = ["DesignSystem"] }
+
+[[promises]]
+message = "goes online, but the app promises to keep everything on this Mac"
+interfaces = { URLSession = "c:objc(cs)NSURLSession" }
+
+[[promises]]
+message = "removes files outside the services that ask first"
+interfaces = { "FileManager.removeItem" = "c:objc(cs)NSFileManager(im)removeItem" }
+
+[dead_code]
+text_keys = "TextKey"
+
+[translations]
+tables = ["Localizable", "Widget"]
+
+[scripts]
+head = "Start:"
+no_shell_scripts = true
+
+[commits]
+samples = "commits.txt"
+
+# A check of a project's own, which the samples test like the built-in ones.
+[custom.fixme]
+title = "No FIXME left in the code"
+function = "custom_rule.py:fixme_problems"

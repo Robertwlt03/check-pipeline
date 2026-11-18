@@ -1,0 +1,31 @@
+# The checks of check-pipeline itself; CI runs the same ones.
+name = "check-pipeline"
+steps = [
+    "tests", "secrets", "security", "duplicates", "nesting", "guides", "files", "deadscripts",
+    "scripts", "english", "language", "commits", "samples",
+]
+
+# CI runs linux on Ubuntu and macos on a Mac (see .github/workflows/ci.yml).
+[groups]
+linux = [
+    "tests", "secrets", "security", "duplicates", "nesting", "deadscripts", "scripts", "guides",
+    "files", "english", "commits",
+]
+macos = ["language", "samples"]
+
+[files]
+python_scripts = ["src/**/*.py", "Tests/*.py"]
+exclude = ["Tests/samples/**"]
+
+[scripts]
+head = "Start:"
+
+[language]
+terms = ["macos", "swiftui", "unittest"]
+
+[samples]
+folder = "Tests/samples"
+
+[commands.tests]
+title = "Unit tests (unittest)"
+command = ["python3", "-m", "unittest", "discover", "-s", "Tests"]

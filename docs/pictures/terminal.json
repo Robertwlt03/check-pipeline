@@ -1,0 +1,6 @@
+{"kind": "terminal", "title": "my-project — zsh", "label": "check-pipeline runs every step: unit tests pass, the secrets step finds a password in settings.txt",
+ "lines": [["command", "check-pipeline"], ["output", "my-project · check pipeline  3 steps"],
+  ["result", "✔ Unit tests (unittest)                 0 findings"],
+  ["output", "✘ No passwords or keys in the repository   1 finding"],
+  ["note", "     ▸ settings.txt  1  a secret written into a setting"],
+  ["result", "✔ No code written twice                  0 findings"]]}

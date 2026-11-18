@@ -1,0 +1,7 @@
+{"kind": "grid", "columns": 3, "items": [
+  {"glyph": "shield", "title": "23 built-in steps", "text": "Secrets, workflows, dead code, duplicates, nesting, links, spelling, architecture and more."},
+  {"glyph": "document", "title": "One settings file", "text": "check-pipeline.toml picks the steps, groups them for CI and holds each check's rules."},
+  {"glyph": "code", "title": "Your own checks", "text": "A Python function that takes the codebase and returns findings is a step."},
+  {"glyph": "terminal", "title": "Your tools", "text": "SwiftLint, ruff or any command whose lines name a file and a line."},
+  {"glyph": "sprout", "title": "Tested by mistakes", "text": "Samples hold a planted mistake for every rule, and the checks must find exactly those."},
+  {"glyph": "globe", "title": "Made for GitHub", "text": "Every finding becomes a note beside its line in the pull request."}]}

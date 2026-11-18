@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "check-pipeline"
+version = "0.1.0"
+description = "A configurable check pipeline for local runs and GitHub Actions, with built-in checks you can override or extend."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Robert Walter" }]
+requires-python = ">=3.13"
+dependencies = [
+    "console-look @ git+https://github.com/Robertwlt03/console-look@v0.1.0",
+    "index-store-reader @ git+https://github.com/Robertwlt03/index-store-reader@v0.1.0",
+]
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Quality Assurance",
+]
+
+[project.urls]
+Repository = "https://github.com/Robertwlt03/check-pipeline"
+
+[project.scripts]
+check-pipeline = "check_pipeline.__main__:main"
+
+[tool.setuptools.package-data]
+check_pipeline = ["unknown_words.swift"]
