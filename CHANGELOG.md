@@ -4,6 +4,13 @@ All notable changes to this project are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-11-20
+
+### Fixed
+
+- `deadscripts` no longer reports a function that `check-pipeline.toml` names as a project's own
+  step, such as `function = "scripts/checks.py:todo_problems"`; the pipeline calls it.
+
 ## [0.1.0] - 2026-11-18
 
 ### Added
@@ -16,4 +23,5 @@ All notable changes to this project are listed here. The format follows
 - The `samples` step: planted mistakes marked with `expect:` test every check, built-in or own.
 - Annotations and a summary table on GitHub; steps that need macOS are skipped elsewhere.
 
+[0.1.1]: https://github.com/Robertwlt03/check-pipeline/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Robertwlt03/check-pipeline/releases/tag/v0.1.0

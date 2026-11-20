@@ -90,6 +90,17 @@ class StepTests(ProjectFolder):
         self.assertEqual(step.title, "No TODO")
         self.assertEqual(pipeline.findings_of(step, codebase), ["notes.txt:1: a TODO"])
 
+    def test_a_custom_function_is_no_dead_code(self) -> None:
+        self.write("scripts/checks.py", CUSTOM_CHECK + "\n\ndef forgotten():\n    return 1\n")
+        self.write("check-pipeline.toml", 'steps = ["deadscripts"]\n[custom.todo]\n'
+                                          'title = "No TODO"\n'
+                                          'function = "scripts/checks.py:todo_problems"\n')
+        codebase = load()
+        [step] = pipeline.chosen_steps(codebase, ["deadscripts"])
+        findings = pipeline.findings_of(step, codebase)
+        self.assertEqual(len(findings), 1)
+        self.assertIn("'forgotten' is declared but never used", findings[0])
+
     def test_a_missing_custom_function_is_named(self) -> None:
         self.write("checks.py", CUSTOM_CHECK)
         self.write("check-pipeline.toml", '[custom.todo]\nfunction = "checks.py:absent"\n')

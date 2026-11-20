@@ -88,9 +88,10 @@ def assigned_names(node: ast.Assign | ast.AnnAssign) -> list[str]:
 # MARK: Steps
 
 
-def unused_definitions(modules: list[Module]) -> list[str]:
+def unused_definitions(modules: list[Module], called: set[str]) -> list[str]:
+    """Definitions no module reads; `called` are the names something outside the code calls."""
     used_elsewhere = set().union(
-        *(module.imported_names() | module.reached_names() for module in modules)
+        called, *(module.imported_names() | module.reached_names() for module in modules)
     )
     return [
         f"{place(module.path, line)}: '{name}' is declared but never used"
@@ -110,6 +111,12 @@ def unused_imports(modules: list[Module]) -> list[str]:
 # MARK: Step
 
 
+def custom_functions(codebase: Codebase) -> set[str]:
+    """The functions check-pipeline.toml names as a project's own steps: the pipeline calls them."""
+    return {spec["function"].rpartition(":")[2]
+            for spec in codebase.settings.get("custom", {}).values() if "function" in spec}
+
+
 def unused_python_problems(codebase: Codebase) -> list[str]:
     modules = [Module(path, ast.parse(path.read_text())) for path in codebase.python_scripts]
-    return unused_definitions(modules) + unused_imports(modules)
+    return unused_definitions(modules, custom_functions(codebase)) + unused_imports(modules)
