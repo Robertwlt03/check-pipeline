@@ -1,7 +1,7 @@
 """Tests the core of check-pipeline: settings, steps, commands, custom checks and the command line.
 
 Start:  python3 -m unittest discover -s Tests (with check-pipeline installed: pip install -e .)
-Needs:  Python 3.13 or newer; the built-in checks are tested by the samples step instead
+Needs:  Python 3.13 or newer; the built-in checks are tested mostly by the samples step
 """
 
 import io
@@ -16,6 +16,7 @@ from unittest import mock
 
 from check_pipeline import pipeline, project
 from check_pipeline.__main__ import main
+from check_pipeline.checks.secrets import SECRETS
 from check_pipeline.project import SettingsProblem, load, matches
 
 CUSTOM_CHECK = '''
@@ -161,6 +162,24 @@ class CommandLineTests(ProjectFolder):
     def test_places_count_from_the_root(self) -> None:
         load()
         self.assertEqual(project.place(self.root / "a" / "b.py", 3), "a/b.py:3")
+
+
+class SecretTests(unittest.TestCase):
+    def test_a_written_secret_is_found_but_not_one_read_with_optional_chaining(self) -> None:
+        rule = SECRETS["a secret written into a setting"]
+        # Put together here, so this file itself holds no line that looks like a secret.
+        for line in [
+            "tok" + 'en = "abcd1234efgh"',
+            "PASS" + "WORD=hunter2hunter2",
+            "tok" + 'en = "abcd?.efgh"',  # inside quotes, ?. is part of the secret
+        ]:
+            self.assertTrue(rule.search(line), line)
+        for line in [
+            "const token = env.DISCORD_TOKEN?.trim();",
+            "apiKey: config?.apiKey",
+            'password = process.env.PASSWORD?.trim() ?? ""',
+        ]:
+            self.assertFalse(rule.search(line), line)
 
 
 if __name__ == "__main__":

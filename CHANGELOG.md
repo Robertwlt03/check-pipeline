@@ -4,6 +4,13 @@ All notable changes to this project are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [0.1.2] - 2026-11-20
+
+### Fixed
+
+- `secrets` no longer reports a value read through optional chaining as a secret written into a
+  setting, such as `const token = env.DISCORD_TOKEN?.trim();` or `apiKey: config?.apiKey`.
+
 ## [0.1.1] - 2026-11-20
 
 ### Fixed
@@ -23,5 +30,6 @@ All notable changes to this project are listed here. The format follows
 - The `samples` step: planted mistakes marked with `expect:` test every check, built-in or own.
 - Annotations and a summary table on GitHub; steps that need macOS are skipped elsewhere.
 
+[0.1.2]: https://github.com/Robertwlt03/check-pipeline/releases/tag/v0.1.2
 [0.1.1]: https://github.com/Robertwlt03/check-pipeline/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Robertwlt03/check-pipeline/releases/tag/v0.1.0
