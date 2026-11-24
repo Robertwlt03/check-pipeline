@@ -20,7 +20,7 @@ Python 3.13 or newer. The steps that read Swift's index need Swift; the spelling
 and are skipped elsewhere, with a line that says so.
 
 ```bash
-pip install git+https://github.com/Robertwlt03/check-pipeline@v0.1.1
+pip install git+https://github.com/Robertwlt03/check-pipeline@v0.1.2
 ```
 
 ## <img src="assets/icons/use.svg" height="33" align="absmiddle" alt="">Use
@@ -137,7 +137,7 @@ steps. Groups split the work into jobs; the commits step needs the history:
   with:
     fetch-depth: 0
     persist-credentials: false
-- run: pip install git+https://github.com/Robertwlt03/check-pipeline@v0.1.1
+- run: pip install git+https://github.com/Robertwlt03/check-pipeline@v0.1.2
 - run: check-pipeline code
 ```
 

@@ -22,7 +22,8 @@ SECRETS = {
     "a secret written into a setting": re.compile(r"""
         (?<! [a-z] )                    # the start of a word or a part such as _PASSWORD
         (?: password | passwd | secret | token | api [_-]? key ) \w* \s* [:=] \s*  # its name
-        ["']? (?! [$<{(%] )             # not a variable, placeholder or format such as $PASSWORD
+        (?! [^\s"'$/(]* \?\. )          # not a read through ?. such as env.TOKEN?.trim()
+        ["']? (?! [$<{(%] )             # nor a variable, placeholder or format such as $PASSWORD
         [^\s"'$/(]{8,}                  # eight characters or more ...
         (?! [\w(.] | \S* / )             # ... that end there: no call, no path, no address
     """, re.VERBOSE | re.IGNORECASE),
